@@ -19,13 +19,13 @@
 	<key>CFBundleSignature</key>
 	<string>????</string>
 	<key>CFBundleVersion</key>
-	<string>4</string>
+	<string>5</string>
 	<key>CFBundleShortVersionString</key>
-	<string>1.1.2</string>
+	<string>1.1.3</string>
 	<key>UpdateFeedURL</key>
-	<string>https://raw.githubusercontent.com/DeutschMark/Glyphsapp-Plugins/master/ShowNodeCount/ShowNodeCount.glyphsReporter/Contents/Info.plist</string>
+	<string>https://raw.githubusercontent.com/DeutschMark/Show-Node-Count/master/ShowNodeCount.glyphsReporter/Contents/Info.plist</string>
 	<key>productPageURL</key>
-	<string>https://github.com/DeutschMark/Glyphsapp-Plugins/tree/master/ShowNodeCount</string>
+	<string>https://github.com/DeutschMark/Show-Node-Count</string>
 	<key>productReleaseNotes</key>
 	<string>New position outside the sidebearings taking italic angle into account</string>
 	<key>LSHasLocalizedDisplayName</key>
