@@ -1,8 +1,8 @@
 # Show Node Count
 
-## Plugin for Glyphsapp
+*This is a plugin for the [Glyphs font editor](http://glyphsapp.com/).*  
 
-This is a Plugin for the [Glyphs font editor](http://glyphsapp.com/). It simply displays the current count of nodes from the currently selected path/glyph/character. It ignores components by now, which is the preferred behaviour for it’s purpose: immedeately spot a potentially incompatible master. Of course the built-in master compatibility preview in Glyphsapp is more powerfull, but not as quick in terms of counting points.
+It simply displays the current count of nodes from the currently selected path/glyph/character. It ignores components by now, which is the preferred behaviour for it’s purpose: immedeately spot a potentially incompatible master. Of course the built-in master compatibility preview in Glyphsapp is more powerfull, but not as quick in terms of counting points.
 
 ### Install
 
@@ -22,15 +22,15 @@ When ever you need it, toggle `Show * Node Count` from the view menu.
 ![Show Node Count Demo](https://raw.githubusercontent.com/DeutschMark/Show-Node-Count/e86d233716549de91ca2938267e21ab9503538d3/Screenshots/ShowNodeCount_Mark-Froemberg.gif?raw=true "Show Node Count Demo")
 
 
-#### Known issues
+##### Known issues
 
 - None so far
 
-#### Pull Requests
+##### Pull Requests
 
 Feel free to comment or pull requests for any improvements.
 
-#### License
+##### License
 
 Copyright 2015 [Mark Frömberg](http://www.markfromberg.com/) *@DeutschMark*
 
