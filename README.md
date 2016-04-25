@@ -19,13 +19,10 @@ When ever you need it, toggle `Show * Node Count` from the view menu.
 
 ### Examples
 
-<<<<<<< HEAD
 ![Show Rotated Demo](https://github.com/Mark2Mark/Glyphsapp-Plugins/blob/Screenshots/ShowNodeCount/Screenshots/ShowNodeCount-Mark-Froemberg-1200.png?raw=true "Show Rotated Demo")
 
 ![Show Rotated live Demo](https://github.com/Mark2Mark/Glyphsapp-Plugins/blob/Screenshots/ShowNodeCount/Screenshots/ShowNodeCount_Mark-Froemberg.gif?raw=true "Show Rotated live Demo")
-=======
-![Show Node Count Demo](https://raw.githubusercontent.com/DeutschMark/Show-Node-Count/e86d233716549de91ca2938267e21ab9503538d3/Screenshots/ShowNodeCount_Mark-Froemberg.gif?raw=true "Show Node Count Demo")
->>>>>>> origin/master
+
 
 
 ##### Known issues
