@@ -46,7 +46,7 @@ class ShowNodeCount ( NSObject, GlyphsReporterProtocol ):
 	
 	def title( self ):
 		try:
-			return "* Node Count"
+			return "Node Count"
 		except Exception as e:
 			self.logToConsole( "title: %s" % str(e) )
 	
