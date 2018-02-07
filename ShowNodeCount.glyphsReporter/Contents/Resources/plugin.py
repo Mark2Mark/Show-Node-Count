@@ -15,62 +15,54 @@
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 import objc
-from Foundation import *
-from AppKit import *
+from GlyphsApp import *
+from GlyphsApp.plugins import *
+
 import sys, os, re
 import math
 
-MainBundle = NSBundle.mainBundle()
-path = MainBundle.bundlePath() + "/Contents/Scripts"
-if not path in sys.path:
-	sys.path.append( path )
-
-import GlyphsApp
-
 GlyphsReporterProtocol = objc.protocolNamed( "GlyphsReporter" )
 
-class ShowNodeCount ( NSObject, GlyphsReporterProtocol ):
-	
+class ShowNodeCount (NSObject):
+	__pyobjc_protocols__ = [GlyphsReporterProtocol]
 	def init( self ):
 		try:
 			#Bundle = NSBundle.bundleForClass_( NSClassFromString( self.className() ));
 			return self
 		except Exception as e:
 			self.logToConsole( "init: %s" % str(e) )
-	
+
 	def interfaceVersion( self ):
 		try:
 			return 1
 		except Exception as e:
 			self.logToConsole( "interfaceVersion: %s" % str(e) )
-	
+
 	def title( self ):
 		try:
 			return "Node Count"
 		except Exception as e:
 			self.logToConsole( "title: %s" % str(e) )
-	
+
 	def keyEquivalent( self ):
 		try:
 			return None
 		except Exception as e:
 			self.logToConsole( "keyEquivalent: %s" % str(e) )
-	
+
 	def modifierMask( self ):
 		try:
 			return 0
 		except Exception as e:
 			self.logToConsole( "modifierMask: %s" % str(e) )
-	
+
 	def drawForegroundForLayer_( self, Layer ):
 		try:
 			pass
 		except Exception as e:
 			self.logToConsole( "drawForegroundForLayer_: %s" % str(e) )
 
-	
 	def drawNodeCount( self, Layer ):
-
 		Glyph = Layer.parent
 		Font = Glyph.parent
 		selectedLayer = Font.selectedLayers[0]
@@ -86,7 +78,6 @@ class ShowNodeCount ( NSObject, GlyphsReporterProtocol ):
 
 		self.drawTextAtPoint( u"· %s" % nodeCounter, (-15 - offset, 5) )
 
-
 	def drawBackgroundForLayer_( self, Layer ):
 		try:
 			self.drawNodeCount( Layer )
@@ -98,7 +89,7 @@ class ShowNodeCount ( NSObject, GlyphsReporterProtocol ):
 			pass
 		except Exception as e:
 			self.logToConsole( "drawBackgroundForInactiveLayer_: %s" % str(e) )
-	
+
 	def drawTextAtPoint( self, text, textPosition, fontSize=10.0, fontColor=NSColor.colorWithCalibratedRed_green_blue_alpha_( 0.4, 0, .6, 1 ) ):
 		try:
 			glyphEditView = self.controller.graphicView()
@@ -111,22 +102,9 @@ class ShowNodeCount ( NSObject, GlyphsReporterProtocol ):
 			glyphEditView.drawText_atPoint_alignment_( displayText, textPosition, textAlignment )
 		except Exception as e:
 			self.logToConsole( "drawTextAtPoint: %s" % str(e) )
-	
+
 	def needsExtraMainOutlineDrawingForInactiveLayer_( self, Layer ):
 		return True
-	
-	def getHandleSize( self ):
-		try:
-			Selected = NSUserDefaults.standardUserDefaults().integerForKey_( "GSHandleSize" )
-			if Selected == 0:
-				return 5.0
-			elif Selected == 2:
-				return 10.0
-			else:
-				return 7.0 # Regular
-		except Exception as e:
-			self.logToConsole( "getHandleSize: HandleSize defaulting to 7.0. %s" % str(e) )
-			return 7.0
 
 	def getScale( self ):
 		try:
@@ -134,13 +112,13 @@ class ShowNodeCount ( NSObject, GlyphsReporterProtocol ):
 		except:
 			self.logToConsole( "Scale defaulting to 1.0" )
 			return 1.0
-	
+
 	def setController_( self, Controller ):
 		try:
 			self.controller = Controller
 		except Exception as e:
 			self.logToConsole( "Could not set controller" )
-	
+
 	def logToConsole( self, message ):
 		myLog = "Show %s plugin:\n%s" % ( self.title(), message )
 		NSLog( myLog )
