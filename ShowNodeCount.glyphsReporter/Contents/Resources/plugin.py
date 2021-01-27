@@ -1,19 +1,18 @@
-#!/usr/bin/env python
 # encoding: utf-8
 
-#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+###########################################################################################################
 #
-# --> let me know if you have ideas for improving
-# --> Mark Froemberg aka DeutschMark @ GitHub
-# --> www.markfromberg.com
 #
-# - ToDo
-#	- 
+#	Reporter Plugin
 #
-#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#	Read the docs:
+#	https://github.com/schriftgestalt/GlyphsSDK/tree/master/Python%20Templates/Reporter
+#
+#
+###########################################################################################################
 
+
+from __future__ import division, print_function, unicode_literals
 import objc
 from GlyphsApp import *
 from GlyphsApp.plugins import *
@@ -23,45 +22,43 @@ import math
 
 GlyphsReporterProtocol = objc.protocolNamed( "GlyphsReporter" )
 
-class ShowNodeCount (NSObject):
-	__pyobjc_protocols__ = [GlyphsReporterProtocol]
-	def init( self ):
-		try:
-			#Bundle = NSBundle.bundleForClass_( NSClassFromString( self.className() ));
-			return self
-		except Exception as e:
-			self.logToConsole( "init: %s" % str(e) )
+class ShowNodeCount(ReporterPlugin):
 
-	def interfaceVersion( self ):
-		try:
-			return 1
-		except Exception as e:
-			self.logToConsole( "interfaceVersion: %s" % str(e) )
+	@objc.python_method
+	def settings(self):
+		self.menuName = Glyphs.localize({
+			'en': 'My Plugin',
+			'de': 'Mein Plugin',
+			'fr': 'Ma extension',
+			'es': 'Mi plugin',
+			'pt': 'Meu plug-in',
+			})
+		self.generalContextMenus = [{
+			'name': Glyphs.localize({
+				'en': 'Do something',
+				'de': 'Tu etwas',
+				'fr': 'Faire quelque chose',
+				'es': 'Hacer algo',
+				'pt': 'Faça alguma coisa',
+				}), 
+			'action': self.doSomething_
+			}]
 
-	def title( self ):
+	@objc.python_method
+	def drawTextAtPoint( self, text, textPosition, fontSize=10.0, fontColor=NSColor.colorWithCalibratedRed_green_blue_alpha_( 0.4, 0, .6, 1 ) ):
 		try:
-			return "Node Count"
+			glyphEditView = self.controller.graphicView()
+			currentZoom = self.getScale()
+			fontAttributes = { 
+				NSFontAttributeName: NSFont.labelFontOfSize_( fontSize/currentZoom ),
+				NSForegroundColorAttributeName: fontColor }
+			displayText = NSAttributedString.alloc().initWithString_attributes_( text, fontAttributes )
+			textAlignment = 2 # top left: 6, top center: 7, top right: 8, center left: 3, center center: 4, center right: 5, bottom left: 0, bottom center: 1, bottom right: 2
+			glyphEditView.drawText_atPoint_alignment_( displayText, textPosition, textAlignment )
 		except Exception as e:
-			self.logToConsole( "title: %s" % str(e) )
+			self.logToConsole( "drawTextAtPoint: %s" % str(e) )			
 
-	def keyEquivalent( self ):
-		try:
-			return None
-		except Exception as e:
-			self.logToConsole( "keyEquivalent: %s" % str(e) )
-
-	def modifierMask( self ):
-		try:
-			return 0
-		except Exception as e:
-			self.logToConsole( "modifierMask: %s" % str(e) )
-
-	def drawForegroundForLayer_( self, Layer ):
-		try:
-			pass
-		except Exception as e:
-			self.logToConsole( "drawForegroundForLayer_: %s" % str(e) )
-
+	@objc.python_method
 	def drawNodeCount( self, Layer ):
 		Glyph = Layer.parent
 		Font = Glyph.parent
@@ -78,34 +75,37 @@ class ShowNodeCount (NSObject):
 
 		self.drawTextAtPoint( u"· %s" % nodeCounter, (-15 - offset, 5) )
 
-	def drawBackgroundForLayer_( self, Layer ):
+	@objc.python_method
+	def background(self, layer):
 		try:
 			self.drawNodeCount( Layer )
 		except Exception as e:
 			self.logToConsole( "drawBackgroundForLayer_: %s" % str(e) )
+	
+	# @objc.python_method
+	# def inactiveLayer(self, layer):
+	# 	NSColor.redColor().set()
+	# 	if layer.paths:
+	# 		layer.bezierPath.fill()
+	# 	if layer.components:
+	# 		for component in layer.components:
+	# 			component.bezierPath.fill()
 
-	def drawBackgroundForInactiveLayer_( self, Layer ):
-		try:
-			pass
-		except Exception as e:
-			self.logToConsole( "drawBackgroundForInactiveLayer_: %s" % str(e) )
+	# @objc.python_method
+	# def preview(self, layer):
+	# 	NSColor.blueColor().set()
+	# 	if layer.paths:
+	# 		layer.bezierPath.fill()
+	# 	if layer.components:
+	# 		for component in layer.components:
+	# 			component.bezierPath.fill()
+	
+	@objc.python_method
+	def __file__(self):
+		"""Please leave this method unchanged"""
+		return __file__
 
-	def drawTextAtPoint( self, text, textPosition, fontSize=10.0, fontColor=NSColor.colorWithCalibratedRed_green_blue_alpha_( 0.4, 0, .6, 1 ) ):
-		try:
-			glyphEditView = self.controller.graphicView()
-			currentZoom = self.getScale()
-			fontAttributes = { 
-				NSFontAttributeName: NSFont.labelFontOfSize_( fontSize/currentZoom ),
-				NSForegroundColorAttributeName: fontColor }
-			displayText = NSAttributedString.alloc().initWithString_attributes_( text, fontAttributes )
-			textAlignment = 2 # top left: 6, top center: 7, top right: 8, center left: 3, center center: 4, center right: 5, bottom left: 0, bottom center: 1, bottom right: 2
-			glyphEditView.drawText_atPoint_alignment_( displayText, textPosition, textAlignment )
-		except Exception as e:
-			self.logToConsole( "drawTextAtPoint: %s" % str(e) )
-
-	def needsExtraMainOutlineDrawingForInactiveLayer_( self, Layer ):
-		return True
-
+	@objc.python_method
 	def getScale( self ):
 		try:
 			return self.controller.graphicView().scale()
@@ -113,12 +113,14 @@ class ShowNodeCount (NSObject):
 			self.logToConsole( "Scale defaulting to 1.0" )
 			return 1.0
 
+	@objc.python_method
 	def setController_( self, Controller ):
 		try:
 			self.controller = Controller
 		except Exception as e:
 			self.logToConsole( "Could not set controller" )
 
+	@objc.python_method
 	def logToConsole( self, message ):
 		myLog = "Show %s plugin:\n%s" % ( self.title(), message )
 		NSLog( myLog )
