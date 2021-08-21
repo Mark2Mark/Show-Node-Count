@@ -18,7 +18,7 @@ from GlyphsApp import *
 from GlyphsApp.plugins import *
 
 # import sys, os, re
-import math
+from math import tan, radians
 
 class ShowNodeCount(ReporterPlugin):
 
@@ -35,7 +35,7 @@ class ShowNodeCount(ReporterPlugin):
 		angle = FontMaster.italicAngle
 
 		# rotation point is half of x-height:
-		offset = math.tan(math.radians(angle)) * xHeight/2
+		offset = tan(radians(angle)) * xHeight/2
 
 		nodeCount = 0
 		for thisPath in Layer.paths:
@@ -45,7 +45,8 @@ class ShowNodeCount(ReporterPlugin):
 
 	@objc.python_method
 	def background(self, layer):
-		self.drawNodeCount( layer )
+		if self.getScale() >= 0.1:
+			self.drawNodeCount( layer )
 	
 	@objc.python_method
 	def __file__(self):
