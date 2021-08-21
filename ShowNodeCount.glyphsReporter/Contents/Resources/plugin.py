@@ -47,24 +47,6 @@ class ShowNodeCount(ReporterPlugin):
 	def background(self, layer):
 		self.drawNodeCount( layer )
 	
-	# @objc.python_method
-	# def inactiveLayer(self, layer):
-	# 	NSColor.redColor().set()
-	# 	if layer.paths:
-	# 		layer.bezierPath.fill()
-	# 	if layer.components:
-	# 		for component in layer.components:
-	# 			component.bezierPath.fill()
-
-	# @objc.python_method
-	# def preview(self, layer):
-	# 	NSColor.blueColor().set()
-	# 	if layer.paths:
-	# 		layer.bezierPath.fill()
-	# 	if layer.components:
-	# 		for component in layer.components:
-	# 			component.bezierPath.fill()
-	
 	@objc.python_method
 	def __file__(self):
 		"""Please leave this method unchanged"""
