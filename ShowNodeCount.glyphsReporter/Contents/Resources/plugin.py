@@ -41,7 +41,7 @@ class ShowNodeCount(ReporterPlugin):
 		for thisPath in Layer.paths:
 			nodeCount += len(thisPath.nodes)
 
-		self.drawTextAtPoint( "· %s" % nodeCount, NSPoint(-25-offset, 5) )
+		self.drawTextAtPoint( "· %s " % nodeCount, NSPoint(-offset, 1), align='bottomright' )
 
 	@objc.python_method
 	def background(self, layer):
