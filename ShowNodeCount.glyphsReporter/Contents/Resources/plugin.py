@@ -31,17 +31,6 @@ class ShowNodeCount(ReporterPlugin):
 			})
 
 	@objc.python_method
-	def drawTextAtPoint( self, text, textPosition, fontSize=12.0, fontColor=NSColor.colorWithCalibratedRed_green_blue_alpha_( 0.4, 0, .6, 1 ) ):
-		glyphEditView = self.controller.graphicView()
-		currentZoom = self.getScale()
-		fontAttributes = { 
-			NSFontAttributeName: NSFont.labelFontOfSize_( fontSize/currentZoom ),
-			NSForegroundColorAttributeName: fontColor }
-		displayText = NSAttributedString.alloc().initWithString_attributes_( text, fontAttributes )
-		textAlignment = 2 # top left: 6, top center: 7, top right: 8, center left: 3, center center: 4, center right: 5, bottom left: 0, bottom center: 1, bottom right: 2
-		displayText.drawAtPoint_( textPosition )
-
-	@objc.python_method
 	def drawNodeCount( self, Layer ):
 		Glyph = Layer.parent
 		Font = Glyph.parent
@@ -56,7 +45,7 @@ class ShowNodeCount(ReporterPlugin):
 		for thisPath in selectedLayer.paths:
 			nodeCounter += len(thisPath.nodes)
 
-		self.drawTextAtPoint( u"· %s" % nodeCounter, (-25 - offset, 5) )
+		self.drawTextAtPoint( u"· %s " % nodeCounter, (-offset, 1), fontColor=NSColor.colorWithCalibratedRed_green_blue_alpha_( 0.4, 0, .6, 1 ), align='bottomright' )
 
 	@objc.python_method
 	def background(self, layer):
